@@ -1,0 +1,347 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Tabaco & Ron — sistema de diseño
+   Paleta: negro profundo · dorado champagne · rojo del logo · crema
+   Tipografía: Georgia (display) + Lato (UI/cuerpo)
+   ============================================================ */
+@theme {
+  /* Fondos */
+  --color-coal: #0a0a0a;
+  --color-coal-soft: #121212;
+  --color-coal-raised: #1a1a1a;
+  --color-coal-deep: #060606;
+
+  /* Acentos */
+  --color-gold: #c8a96a;
+  --color-gold-bright: #e3c889;
+  --color-crimson: #b91c1c;
+  --color-crimson-deep: #8a0f0f;
+
+  /* Texto */
+  --color-cream: #f5f1e8;
+  --color-cream-mute: #b8b1a0;
+  --color-muted: #6f6857;
+
+  /* Hairlines doradas */
+  --color-line: rgba(200, 169, 106, 0.18);
+  --color-line-strong: rgba(200, 169, 106, 0.45);
+
+  /* Tipografía */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-lato), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Courier New", monospace;
+
+  /* Breakpoints alineados con el prototipo (móvil <720 · tablet 720–1024 · desktop ≥1024) */
+  --breakpoint-sm: 560px;
+  --breakpoint-md: 720px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-coal);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-coal);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-coal);
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2418;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ---------- Utilidades de marca ---------- */
+@utility container-tr {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+@media (min-width: 720px) {
+  .container-tr {
+    padding-inline: 32px;
+  }
+}
+@media (min-width: 1024px) {
+  .container-tr {
+    padding-inline: 56px;
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* Botones */
+@utility btn-tr {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-tr:hover {
+  background: var(--color-gold);
+  color: var(--color-coal);
+}
+.btn-tr.solid {
+  background: var(--color-gold);
+  color: var(--color-coal);
+}
+.btn-tr.solid:hover {
+  background: var(--color-gold-bright);
+  border-color: var(--color-gold-bright);
+}
+.btn-tr.ghost {
+  border-color: rgba(245, 241, 232, 0.25);
+  color: var(--color-cream);
+}
+.btn-tr.ghost:hover {
+  background: var(--color-cream);
+  color: var(--color-coal);
+  border-color: var(--color-cream);
+}
+
+/* Logo pill */
+@utility logo-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-crimson);
+  color: var(--color-cream);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-style: italic;
+  border-radius: 999px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ---------- Sistema de placeholders / fotografía ---------- */
+.ph {
+  position: relative;
+  overflow: hidden;
+  background: #161310;
+  color: var(--color-gold);
+  isolation: isolate;
+}
+.ph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(200, 169, 106, 0.18), transparent 55%),
+    radial-gradient(ellipse at 75% 75%, rgba(185, 28, 28, 0.22), transparent 50%),
+    linear-gradient(180deg, #1a1611 0%, #0c0a07 100%);
+}
+.ph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(200, 169, 106, 0.04) 0 1px,
+    transparent 1px 14px
+  );
+}
+.ph.warm::before {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(227, 200, 137, 0.22), transparent 55%),
+    radial-gradient(ellipse at 60% 90%, rgba(139, 90, 43, 0.35), transparent 55%),
+    linear-gradient(180deg, #1c140c 0%, #0a0805 100%);
+}
+.ph.smoke::before {
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(245, 241, 232, 0.08), transparent 50%),
+    radial-gradient(ellipse at 75% 30%, rgba(200, 169, 106, 0.1), transparent 55%),
+    linear-gradient(180deg, #0e0c0a 0%, #050403 100%);
+}
+.ph.crimson::before {
+  background:
+    radial-gradient(ellipse at 35% 55%, rgba(185, 28, 28, 0.3), transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(200, 169, 106, 0.12), transparent 55%),
+    linear-gradient(180deg, #1a0d0d 0%, #0a0505 100%);
+}
+.ph-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  filter: sepia(0.25) brightness(0.78) contrast(1.08) saturate(0.95);
+}
+.ph-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(200, 169, 106, 0.12), transparent 60%),
+    radial-gradient(ellipse at center, transparent 35%, rgba(10, 10, 10, 0.45) 100%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.1) 0%, rgba(10, 10, 10, 0.3) 100%);
+}
+.ph-label {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 5;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: rgba(245, 241, 232, 0.55);
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border: 1px solid rgba(245, 241, 232, 0.18);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+/* Modo producto — imagen real de catálogo sobre fondo crema */
+.ph.ph-product {
+  background: linear-gradient(180deg, #efe6d6 0%, #e2d6bf 100%);
+}
+.ph.ph-product::before {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(80, 55, 30, 0.15), transparent 60%);
+}
+.ph.ph-product::after {
+  display: none;
+}
+.ph-img-product {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  z-index: 2;
+  padding: 8%;
+  filter: drop-shadow(0 18px 28px rgba(40, 20, 10, 0.28));
+}
+
+/* ---------- Animaciones ---------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slideUpSheet {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fadeUp 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.page {
+  animation: fadeUp 0.4s ease both;
+}
+
+@utility anim-fade-in {
+  animation: fadeIn 0.2s ease;
+}
+@utility anim-slide-up {
+  animation: slideUpSheet 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@utility anim-slide-in-right {
+  animation: slideInRight 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.anim-fade-in {
+  animation: fadeIn 0.25s ease both;
+}
+.anim-slide-in-right {
+  animation: slideInRight 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.anim-slide-up {
+  animation: slideUpSheet 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
