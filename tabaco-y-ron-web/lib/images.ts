@@ -1,8 +1,8 @@
 // Librería de imágenes temáticas (Unsplash) — fotografías de tabaquería,
 // encendedores, lounge de alta sociedad, cigarros, maderas y cuero.
 // Cada slot recibe una imagen distinta y determinística según su seed.
-
-const IMG_BASE = "https://images.unsplash.com";
+// Las imágenes están servidas localmente desde /public/ambient/ para no
+// depender de la CDN externa (algunas redes / extensiones bloquean Unsplash).
 
 export type ImgTag =
   | "hero"
@@ -56,9 +56,10 @@ function pickImg(seed: string, tag?: ImgTag): string {
   return pool[hash(seed) % pool.length];
 }
 
-export function ambientUrl(seed: string, tag?: ImgTag, w = 1200): string {
+export function ambientUrl(seed: string, tag?: ImgTag, _w = 1200): string {
+  void _w; // ancho fijo: las imágenes están preempaquetadas a 1600
   const photoId = pickImg(seed, tag);
-  return `${IMG_BASE}/${photoId}?fm=jpg&q=70&w=${w}&auto=format&fit=crop`;
+  return `/ambient/${photoId}.jpg`;
 }
 
 // Imágenes reales de productos (catálogo)
