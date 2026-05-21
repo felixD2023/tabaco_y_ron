@@ -1,5 +1,62 @@
+import type { Metadata } from "next";
+
 import Placeholder from "@/components/Placeholder";
 import { SectionHead } from "@/components/ui";
+import { SITE, SITE_URL } from "@/lib/site-config";
+
+export const metadata: Metadata = {
+  title: "Nuestra casa: tabaquería en Madrid desde 2009",
+  description:
+    "Tabaco & Ron es una tabaquería madrileña fundada en 2009 en la Calle del Almirante 14, Chueca. Doce casas representadas, sin intermediarios, con conservación 70/70 verificada cada día.",
+  alternates: { canonical: "/nosotros" },
+  openGraph: {
+    type: "website",
+    url: `${SITE_URL}/nosotros`,
+    title: `Nuestra casa — ${SITE.name}`,
+    description:
+      "Diecisiete años de oficio, un solo local en Madrid, doce casas visitadas cada año. Conozca a Esteban Marrero, Lucía Reyes y Joaquín Cánovas.",
+    images: [SITE.ogImage],
+  },
+};
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TobaccoShop",
+  name: SITE.name,
+  url: `${SITE_URL}/nosotros`,
+  image: SITE.ogImage,
+  description:
+    "Tabaquería madrileña fundada en 2009 especializada en habanos premium y accesorios para puros.",
+  telephone: SITE.contact.phone,
+  email: SITE.contact.email,
+  priceRange: "€€€",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.locality,
+    addressRegion: SITE.address.region,
+    postalCode: SITE.address.postalCode,
+    addressCountry: SITE.address.country,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "11:00",
+      closes: "21:00",
+    },
+  ],
+  foundingDate: "2009",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: SITE_URL },
+    { "@type": "ListItem", position: 2, name: "Nosotros", item: `${SITE_URL}/nosotros` },
+  ],
+};
 
 const STATS = [
   ["17", "años de oficio"],
@@ -62,6 +119,14 @@ const VISIT = [
 export default function NosotrosPage() {
   return (
     <div className="page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative min-h-[440px] md:min-h-[560px]">
         <Placeholder

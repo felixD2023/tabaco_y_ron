@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(./.venv/Scripts/python.exe -m scripts.apply_prices_jsonld_rocky_patel)",
+      "Bash(./.venv/Scripts/python.exe -c ' *)",
+      "Bash(curl -s \"http://127.0.0.1:8001/api/v1/productos?q=sixty+robusto&page_size=2\")",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"AJ Fernandez\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\AJ Fernandez\" --dry-run)",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"AJ Fernandez\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\AJ Fernandez\")",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"AJ Fernandez\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\AJ Fernandez\" --refresh)",
+      "Bash(curl -s \"http://127.0.0.1:8001/api/v1/productos?q=dorado+gordito&page_size=5\")",
+      "Bash(curl -s \"http://127.0.0.1:8001/api/v1/marcas\")",
+      "PowerShell($c = Get-NetTCPConnection -LocalPort 8001 -ErrorAction SilentlyContinue | Where-Object State -eq Listen | Select-Object -First 1; if \\($c\\) { Stop-Process -Id $c.OwningProcess -Force; \"Stopped $\\($c.OwningProcess\\)\" } else { \"Nothing on 8001\" })",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Capitol\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Capitol\" --dry-run)",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Capitol\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Capitol\")",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Capitol\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Capitol\" --refresh)",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Empatía\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Empatia\" --dry-run)",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Empatía\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Empatia\")",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Empatía\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Empatia\" --refresh)",
+      "Bash(python -c \"import json,sys; print\\('\\\\n=== filtro ==='\\); [print\\(f\\\\\"  {m['nombre']}: {m['total_productos']}\\\\\"\\) for m in json.load\\(sys.stdin\\) if m['nombre']=='Empatía']\")",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Oliva\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Oliva\" --dry-run)",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Oliva\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Oliva\")",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Oliva\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Oliva\" --refresh)",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Pichardo\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Pichardo\" --dry-run)",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Pichardo\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Pichardo\")",
+      "Bash(./.venv/Scripts/python.exe -m scripts.seed_marca --marca \"Pichardo\" --dir \"C:\\\\Users\\\\Mage\\\\Desktop\\\\TABACO&RON\\\\Pagina\\\\Productos X Marca\\\\Pichardo\" --refresh)"
+    ]
+  }
+}
