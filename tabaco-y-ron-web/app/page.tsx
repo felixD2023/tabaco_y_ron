@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 function Hero() {
   return (
-    <section className="relative h-screen min-h-[600px] overflow-hidden md:min-h-[720px]">
+    <section className="relative flex min-h-screen flex-col overflow-hidden">
       <Placeholder
         tag="hero"
         seed="tr-home-hero"
@@ -64,7 +64,7 @@ function Hero() {
         </div>
       </div>
 
-      <div className="container-tr relative z-[4] flex h-full flex-col justify-end pb-[130px] md:pb-[100px]">
+      <div className="container-tr relative z-[4] flex w-full flex-1 flex-col justify-end py-12 md:py-16">
         <div className="fade-up max-w-[880px]">
           <div className="mb-5 flex items-center gap-3.5 md:mb-7">
             <span className="h-px w-7 bg-gold md:w-12" />
@@ -96,7 +96,7 @@ function Hero() {
       </div>
 
       <div
-        className="absolute inset-x-0 bottom-0 z-[5] border-t border-line"
+        className="relative z-[5] border-t border-line"
         style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(10px)" }}
       >
         <div className="container-tr grid grid-cols-2 gap-x-4 gap-y-3 py-4 md:grid-cols-4 md:gap-0 md:py-6">

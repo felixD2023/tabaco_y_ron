@@ -128,12 +128,130 @@ function activeCount(f: Filters): number {
   );
 }
 
-function formatPrecio(p: Producto): string {
-  const caja = p.precio_caja ? Number(p.precio_caja) : null;
-  const ind = p.precio_individual ? Number(p.precio_individual) : null;
-  if (caja != null) return `$${caja.toFixed(2)}`;
-  if (ind != null) return `$${ind.toFixed(2)}`;
-  return "Bajo consulta";
+function precioInfo(p: Producto) {
+  const num = (v?: string | null) => {
+    if (v == null) return null;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  };
+  return {
+    caja: num(p.precio_caja),
+    cajaDesc: num(p.precio_descuento_caja),
+    ind: num(p.precio_individual),
+    indDesc: num(p.precio_descuento_individual),
+  };
+}
+
+/**
+ * Una línea de precio: etiqueta ("Caja"/"Unidad"), precio tachado si hay
+ * rebaja, precio final y badge con el % de descuento. `emphasis` la pinta
+ * más grande y en dorado (se reserva para el precio principal).
+ */
+function PriceLine({
+  label,
+  base,
+  desc,
+  emphasis = false,
+  size = "card",
+}: {
+  label: string;
+  base: number;
+  desc: number | null;
+  emphasis?: boolean;
+  size?: "card" | "row";
+}) {
+  const hasDesc = desc != null && desc > 0 && desc < base;
+  const final = hasDesc ? desc! : base;
+  const pct = hasDesc ? Math.round((1 - final / base) * 100) : 0;
+  return (
+    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+      <span className="text-[10px] uppercase tracking-[0.16em] text-cream-mute">{label}</span>
+      {hasDesc && (
+        <span
+          className={`text-cream-mute line-through opacity-55 ${
+            size === "row" ? "text-[13px]" : "text-[12px]"
+          }`}
+        >
+          ${base.toFixed(2)}
+        </span>
+      )}
+      <span
+        className={`font-serif tabular-nums ${
+          emphasis
+            ? `text-gold ${size === "row" ? "text-[16px]" : "text-[15px]"}`
+            : `text-cream ${size === "row" ? "text-[14px]" : "text-[13px]"}`
+        }`}
+      >
+        ${final.toFixed(2)}
+      </span>
+      {hasDesc && pct > 0 && (
+        <span className="rounded-sm bg-gold/15 px-1 py-px text-[9px] font-bold uppercase tracking-wide text-gold">
+          −{pct}%
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Bloque de precios del catálogo: caja primero (énfasis), unidad debajo.
+ * Si solo existe uno, ese toma el énfasis. Sin precios → "Bajo consulta".
+ */
+function PriceBlock({ p, size = "card" }: { p: Producto; size?: "card" | "row" }) {
+  const { caja, cajaDesc, ind, indDesc } = precioInfo(p);
+  if (caja == null && ind == null) {
+    return (
+      <span className="text-[11px] uppercase tracking-[0.18em] text-cream-mute">
+        Bajo consulta
+      </span>
+    );
+  }
+  return (
+    <div className="flex flex-col gap-1">
+      {caja != null && (
+        <PriceLine label="Caja" base={caja} desc={cajaDesc} emphasis size={size} />
+      )}
+      {ind != null && (
+        <PriceLine label="Unidad" base={ind} desc={indDesc} emphasis={caja == null} size={size} />
+      )}
+    </div>
+  );
+}
+
+/** Fila de precio para el drawer de detalle: etiqueta, precio tachado si hay
+ *  rebaja, precio final grande en dorado y badge con el % de descuento. */
+function DetailPriceRow({
+  label,
+  base,
+  desc,
+}: {
+  label: string;
+  base: number;
+  desc: number | null;
+}) {
+  const hasDesc = desc != null && desc > 0 && desc < base;
+  const final = hasDesc ? desc! : base;
+  const pct = hasDesc ? Math.round((1 - final / base) * 100) : 0;
+  return (
+    <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3">
+      <span className="text-[10px] uppercase tracking-[0.22em] text-cream-mute">{label}</span>
+      <div className="flex items-baseline gap-2.5">
+        {hasDesc && (
+          <span className="font-serif text-[16px] text-cream-mute line-through opacity-55">
+            ${base.toFixed(2)}
+          </span>
+        )}
+        <span className="font-serif text-[26px] leading-none text-gold tabular-nums">
+          ${final.toFixed(2)}
+        </span>
+        {hasDesc && pct > 0 && (
+          <span className="rounded-sm bg-gold/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-gold">
+            −{pct}%
+          </span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 function fortalezaLabel(f: Fortaleza | null | undefined): string | null {
@@ -156,24 +274,34 @@ function ProductCard({
       onClick={onClick}
       className="group flex flex-col text-left transition-opacity hover:opacity-95 focus:outline-none focus-visible:ring-1 focus-visible:ring-gold"
     >
-      <div className="relative overflow-hidden bg-coal-soft" style={{ aspectRatio: "4/5" }}>
+      <div className="card-product-bg relative aspect-square overflow-hidden">
         {p.imagen ? (
           <Image
             src={p.imagen}
             alt={p.nombre}
             fill
             sizes="(max-width:768px) 50vw, (max-width:1024px) 33vw, (max-width:1280px) 25vw, 20vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            className="z-[2] object-contain drop-shadow-[0_18px_28px_rgba(40,20,10,0.28)] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
         ) : (
-          <Image
-            src={marcaPlaceholder}
-            alt=""
+          <div
             aria-hidden
-            fill
-            sizes="(max-width:768px) 50vw, (max-width:1024px) 33vw, (max-width:1280px) 25vw, 20vw"
-            className="object-cover opacity-50"
-          />
+            className="absolute inset-0 z-[2] flex flex-col items-center justify-center gap-2 text-coal/40"
+          >
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.4"
+            >
+              <rect x="3" y="5" width="18" height="14" rx="1" />
+              <circle cx="8.5" cy="10.5" r="1.5" />
+              <path d="m21 16-5-5L8 19" />
+            </svg>
+            <span className="text-[9px] uppercase tracking-[0.28em]">Imagen no disponible</span>
+          </div>
         )}
       </div>
       <div className="pt-3">
@@ -183,7 +311,9 @@ function ProductCard({
         <div className="line-clamp-2 font-serif text-[14px] leading-[1.25] text-cream">
           {p.nombre}
         </div>
-        <div className="mt-2 font-serif text-[14px] text-cream">{formatPrecio(p)}</div>
+        <div className="mt-2">
+          <PriceBlock p={p} />
+        </div>
       </div>
     </button>
   );
@@ -219,7 +349,7 @@ function ProductRow({
       <div className="text-[11px] uppercase tracking-[0.18em] text-cream-mute">
         {fortalezaLabel(p.fortaleza) ?? "—"}
       </div>
-      <div className="font-serif text-[15px] text-cream">{formatPrecio(p)}</div>
+      <PriceBlock p={p} size="row" />
     </button>
   );
 }
@@ -292,22 +422,23 @@ function ProductDetailDrawer({
   const ind = p.precio_individual ? Number(p.precio_individual) : null;
   const descCaja = p.precio_descuento_caja ? Number(p.precio_descuento_caja) : null;
   const descInd = p.precio_descuento_individual ? Number(p.precio_descuento_individual) : null;
-
-  // Precio: si el slot activo es "tabaco_suelto" y hay precio_individual, mostramos
-  // el individual. En cualquier otro caso, mostramos el precio "principal" (caja si
-  // existe, en su defecto el individual).
-  const useIndividual = active.tipo === "tabaco_suelto" && ind != null;
-  const precioMostrar = useIndividual ? ind : caja ?? ind;
-  const descuentoMostrar = useIndividual ? descInd : caja != null ? descCaja : descInd;
+  const hayPrecio = caja != null || ind != null;
+  const subcatNombre =
+    marca?.subcategorias.find((s) => s.id === p.subcategoria_id)?.nombre ?? null;
 
   // Construimos las filas dinámicamente: solo las que tienen valor en la BD.
   const attrs: { label: string; value: string | number }[] = [];
+  if (subcatNombre) attrs.push({ label: "Línea", value: subcatNombre });
   if (p.vitola) attrs.push({ label: "Vitola", value: p.vitola });
   if (p.largo_mm != null) attrs.push({ label: "Largo", value: `${p.largo_mm} mm` });
   if (p.cepo != null) attrs.push({ label: "Cepo", value: p.cepo });
   if (intensity) attrs.push({ label: "Fortaleza", value: intensity });
+  if (p.tiempo_fumado)
+    attrs.push({ label: "Tiempo de fumada", value: `${p.tiempo_fumado} minutos` });
+  if (p.unidades_por_caja != null)
+    attrs.push({ label: "Unidades por caja", value: p.unidades_por_caja });
+  if (p.rating != null) attrs.push({ label: "Valoración", value: `${p.rating.toFixed(1)} / 5` });
   attrs.push({ label: "Existencia", value: p.existencia ? "En stock" : "Sin stock" });
-  if (p.tiempo_fumado) attrs.push({ label: "Tiempo de fumada", value: p.tiempo_fumado });
 
   if (!mounted) return null;
 
@@ -351,7 +482,7 @@ function ProductDetailDrawer({
           <div className="px-6 py-7 md:px-8">
             {/* Galería: imagen principal grande */}
             <div
-              className="relative mb-3 flex items-center justify-center overflow-hidden border border-line bg-coal-soft"
+              className="card-product-bg relative mb-3 flex items-center justify-center overflow-hidden border border-line"
               style={{ height: 320 }}
             >
               {active.url ? (
@@ -360,11 +491,11 @@ function ProductDetailDrawer({
                   alt={p.nombre}
                   fill
                   sizes="(max-width:768px) 100vw, 520px"
-                  className="object-contain p-4"
+                  className="relative z-[2] object-contain p-4 drop-shadow-[0_18px_28px_rgba(40,20,10,0.28)]"
                   key={active.url}
                 />
               ) : (
-                <div className="flex flex-col items-center gap-3 text-cream-mute">
+                <div className="relative z-[2] flex flex-col items-center gap-3 text-coal/45">
                   <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
                     <rect x="3" y="5" width="18" height="14" rx="1" />
                     <circle cx="8.5" cy="10.5" r="1.5" />
@@ -398,7 +529,7 @@ function ProductDetailDrawer({
                     disabled={isEmpty}
                     aria-label={title}
                     title={title}
-                    className={`relative flex aspect-square items-center justify-center overflow-hidden border bg-coal-soft transition-colors ${
+                    className={`card-product-bg relative flex aspect-square items-center justify-center overflow-hidden border transition-colors ${
                       isActive
                         ? "border-gold"
                         : isEmpty
@@ -412,7 +543,7 @@ function ProductDetailDrawer({
                         alt={title}
                         fill
                         sizes="80px"
-                        className="object-contain p-1.5"
+                        className="relative z-[2] object-contain p-1.5"
                       />
                     ) : (
                       <svg
@@ -422,7 +553,7 @@ function ProductDetailDrawer({
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.4"
-                        className="text-cream-mute"
+                        className="relative z-[2] text-coal/40"
                       >
                         <rect x="3" y="5" width="18" height="14" rx="1" />
                         <circle cx="8.5" cy="10.5" r="1.5" />
@@ -446,25 +577,17 @@ function ProductDetailDrawer({
               {p.nombre}
             </h2>
 
-            {/* Precio */}
-            <div className="mb-7 flex items-baseline gap-3">
-              {precioMostrar != null ? (
-                <>
-                  {descuentoMostrar != null && (
-                    <span className="font-serif text-[18px] text-cream-mute line-through opacity-60">
-                      ${precioMostrar.toFixed(2)}
-                    </span>
-                  )}
-                  <span className="font-serif text-[32px] text-gold">
-                    ${(descuentoMostrar ?? precioMostrar).toFixed(2)}
-                  </span>
-                </>
-              ) : (
-                <span className="text-[13px] uppercase tracking-[0.2em] text-cream-mute">
-                  Precio bajo consulta
-                </span>
-              )}
-            </div>
+            {/* Precios: caja y unidad, con rebaja si aplica */}
+            {hayPrecio ? (
+              <div className="mb-8 flex flex-col gap-3">
+                {caja != null && <DetailPriceRow label="Por caja" base={caja} desc={descCaja} />}
+                {ind != null && <DetailPriceRow label="Por unidad" base={ind} desc={descInd} />}
+              </div>
+            ) : (
+              <div className="mb-8 text-[13px] uppercase tracking-[0.2em] text-cream-mute">
+                Precio bajo consulta
+              </div>
+            )}
 
             {/* Atributos en 2 columnas — solo los que existen en BD */}
             {attrs.length > 0 && (
@@ -1031,7 +1154,7 @@ function TiendaInner() {
                 <div className={gridClass}>
                   {Array.from({ length: PAGE_SIZE }).map((_, i) => (
                     <div key={i} className="flex flex-col">
-                      <div className="aspect-[4/5] animate-pulse bg-line" />
+                      <div className="aspect-square animate-pulse bg-line" />
                       <div className="mt-3 h-2.5 w-1/3 animate-pulse bg-line" />
                       <div className="mt-2 h-4 w-3/4 animate-pulse bg-line" />
                     </div>

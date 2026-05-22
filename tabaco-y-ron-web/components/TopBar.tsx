@@ -35,6 +35,7 @@ export default function TopBar() {
   const isActive = (href: string) => pathname === href;
 
   return (
+    <>
     <header
       className="sticky top-0 z-50 transition-all duration-300"
       style={{
@@ -136,6 +137,7 @@ export default function TopBar() {
           </button>
         </div>
       </div>
+    </header>
 
       {/* Drawer móvil / tablet */}
       {menuOpen && (
@@ -181,6 +183,6 @@ export default function TopBar() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

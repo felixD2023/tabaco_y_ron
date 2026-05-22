@@ -52,6 +52,8 @@ body {
   font-family: var(--font-sans);
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
+  /* Controles de formulario nativos (popups de select, scrollbars) en oscuro. */
+  color-scheme: dark;
 }
 
 body {
@@ -95,6 +97,42 @@ p {
 :focus-visible {
   outline: 1px solid var(--color-gold);
   outline-offset: 2px;
+}
+
+/* ---------- Selects (tema oscuro, flecha dorada) ----------
+   Reglas sin @layer → ganan a las utilidades de Tailwind, por eso
+   podemos reservar el hueco de la flecha sin tocar el padding vertical.
+   El popup de <option> solo se puede tematizar desde CSS global. */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  /* Hace que Chrome/Edge pinten el popup nativo de <option> en oscuro. */
+  color-scheme: dark;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23c8a96a'%20stroke-width='2.5'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='m6%209%206%206%206-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  background-size: 0.7rem auto;
+  padding-right: 2.1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+select:hover {
+  border-color: var(--color-line-strong);
+}
+select:focus,
+select:focus-visible {
+  outline: none;
+  border-color: var(--color-gold);
+}
+select option {
+  background-color: var(--color-coal-soft);
+  color: var(--color-cream);
+  padding: 8px 10px;
+}
+select option:checked {
+  background-color: var(--color-gold);
+  color: var(--color-coal);
+  font-weight: 500;
 }
 
 /* ---------- Utilidades de marca ---------- */
@@ -283,6 +321,22 @@ p {
   z-index: 2;
   padding: 8%;
   filter: drop-shadow(0 18px 28px rgba(40, 20, 10, 0.28));
+}
+
+/* Fondo crema de los destacados, reutilizado en las cards de la tienda
+   (gradiente + brillo radial). La imagen va en object-contain y sin padding. */
+.card-product-bg {
+  background: linear-gradient(180deg, #efe6d6 0%, #e2d6bf 100%);
+}
+.card-product-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(80, 55, 30, 0.15), transparent 60%);
 }
 
 /* ---------- Animaciones ---------- */
