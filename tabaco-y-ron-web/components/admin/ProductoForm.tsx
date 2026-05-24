@@ -43,6 +43,8 @@ type FormState = {
   unidades_por_caja: string;
   rating: string;
   existencia: boolean;
+  disponible_caja: boolean;
+  disponible_individual: boolean;
   imagenes: GalleryItem[];
   marca_id: string;
   subcategoria_id: string;
@@ -79,6 +81,8 @@ function buildInitial(producto?: Producto | null): FormState {
       producto?.unidades_por_caja != null ? String(producto.unidades_por_caja) : "",
     rating: producto?.rating != null ? String(producto.rating) : "",
     existencia: producto?.existencia ?? true,
+    disponible_caja: producto?.disponible_caja ?? true,
+    disponible_individual: producto?.disponible_individual ?? true,
     imagenes: buildInitialImagenes(producto),
     marca_id: producto?.marca_id != null ? String(producto.marca_id) : "",
     subcategoria_id: producto?.subcategoria_id != null ? String(producto.subcategoria_id) : "",
@@ -207,6 +211,8 @@ export default function ProductoForm({
       unidades_por_caja: intOrNull(form.unidades_por_caja),
       rating: intOrNull(form.rating),
       existencia: form.existencia,
+      disponible_caja: form.disponible_caja,
+      disponible_individual: form.disponible_individual,
       // La portada (primera imagen) sincroniza el campo `imagen` que usa el
       // storefront; la galería completa va en `imagenes` con su orden recalculado.
       imagen: imagenes[0]?.url ?? null,
@@ -397,6 +403,31 @@ export default function ProductoForm({
               onChange={(e) => set("precio_descuento_caja", e.target.value)}
             />
           </Field>
+        </div>
+
+        {/* Disponibilidad por formato: si se desmarca, ese precio no se muestra en la tienda. */}
+        <div className="grid grid-cols-1 gap-3 rounded-md border border-line bg-coal-soft p-4 sm:grid-cols-2">
+          <label className="flex cursor-pointer items-center gap-2.5 text-sm text-cream">
+            <input
+              type="checkbox"
+              checked={form.disponible_caja}
+              onChange={(e) => set("disponible_caja", e.target.checked)}
+              className="h-4 w-4 accent-[var(--color-gold)]"
+            />
+            Disponible por caja
+          </label>
+          <label className="flex cursor-pointer items-center gap-2.5 text-sm text-cream">
+            <input
+              type="checkbox"
+              checked={form.disponible_individual}
+              onChange={(e) => set("disponible_individual", e.target.checked)}
+              className="h-4 w-4 accent-[var(--color-gold)]"
+            />
+            Disponible por unidad (tabaco suelto)
+          </label>
+          <p className="text-xs text-cream-mute sm:col-span-2">
+            Si desmarcas un formato, su precio no se mostrará en la tienda aunque tenga un valor.
+          </p>
         </div>
 
         <Field

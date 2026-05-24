@@ -78,6 +78,9 @@ export interface ProductoBase {
   unidades_por_caja?: number | null;
   rating?: number | null;
   existencia?: boolean;
+  // Disponibilidad por formato: si es false, ese precio no se muestra en la tienda.
+  disponible_caja?: boolean;
+  disponible_individual?: boolean;
   imagen?: string | null;
 }
 

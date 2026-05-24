@@ -2,7 +2,17 @@ import enum
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, CheckConstraint, Enum, ForeignKey, Integer, Numeric, String, Text
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Enum,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    text,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -54,6 +64,16 @@ class Producto(Base):
 
     rating: Mapped[int | None] = mapped_column(Integer, nullable=True)
     existencia: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+
+    # Disponibilidad por formato. Si está en False, ese precio no se muestra en la
+    # tienda. `disponible_caja` = existencia en caja; `disponible_individual` =
+    # existencia del tabaco suelto (por unidad).
+    disponible_caja: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=True, server_default=text("true")
+    )
+    disponible_individual: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=True, server_default=text("true")
+    )
 
     imagen: Mapped[str | None] = mapped_column(String(500), nullable=True)
 

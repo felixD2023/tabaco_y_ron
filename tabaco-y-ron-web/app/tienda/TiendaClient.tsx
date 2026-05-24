@@ -134,10 +134,14 @@ function precioInfo(p: Producto) {
     const n = Number(v);
     return Number.isFinite(n) ? n : null;
   };
+  // Un formato no disponible (flag en false) no muestra su precio. Si el flag
+  // viene undefined (API antigua) se asume disponible.
+  const dispCaja = p.disponible_caja !== false;
+  const dispInd = p.disponible_individual !== false;
   return {
-    caja: num(p.precio_caja),
+    caja: dispCaja ? num(p.precio_caja) : null,
     cajaDesc: num(p.precio_descuento_caja),
-    ind: num(p.precio_individual),
+    ind: dispInd ? num(p.precio_individual) : null,
     indDesc: num(p.precio_descuento_individual),
   };
 }
@@ -418,8 +422,10 @@ function ProductDetailDrawer({
   const active = slots[selectedIdx];
 
   const intensity = fortalezaLabel(p.fortaleza);
-  const caja = p.precio_caja ? Number(p.precio_caja) : null;
-  const ind = p.precio_individual ? Number(p.precio_individual) : null;
+  // Un formato no disponible no muestra su precio (coherente con la card).
+  const caja = p.disponible_caja !== false && p.precio_caja ? Number(p.precio_caja) : null;
+  const ind =
+    p.disponible_individual !== false && p.precio_individual ? Number(p.precio_individual) : null;
   const descCaja = p.precio_descuento_caja ? Number(p.precio_descuento_caja) : null;
   const descInd = p.precio_descuento_individual ? Number(p.precio_descuento_individual) : null;
   const hayPrecio = caja != null || ind != null;

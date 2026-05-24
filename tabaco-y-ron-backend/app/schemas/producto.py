@@ -32,6 +32,10 @@ class ProductoBase(BaseModel):
     rating: int | None = Field(default=None, ge=1, le=100)
     existencia: bool = True
 
+    # Disponibilidad por formato: si es False, ese precio no se muestra en la tienda.
+    disponible_caja: bool = True
+    disponible_individual: bool = True
+
     imagen: str | None = Field(default=None, max_length=500)
 
 
@@ -80,6 +84,8 @@ class ProductoUpdate(BaseModel):
     unidades_por_caja: int | None = Field(default=None, ge=1)
     rating: int | None = Field(default=None, ge=1, le=100)
     existencia: bool | None = None
+    disponible_caja: bool | None = None
+    disponible_individual: bool | None = None
     imagen: str | None = Field(default=None, max_length=500)
     marca_id: int | None = None
     subcategoria_id: int | None = None
