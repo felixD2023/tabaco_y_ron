@@ -339,6 +339,33 @@ select option:checked {
     radial-gradient(ellipse at 50% 110%, rgba(80, 55, 30, 0.15), transparent 60%);
 }
 
+/* ---------- BrandsStrip — hover de las tarjetas de marca ---------- */
+.brand-tile .brand-cta {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.brand-tile:hover .brand-card,
+.brand-tile:focus-visible .brand-card {
+  transform: translateY(-6px);
+  box-shadow:
+    0 24px 50px rgba(0, 0, 0, 0.65),
+    0 0 0 1px var(--color-gold);
+}
+.brand-tile:hover .brand-bg-img,
+.brand-tile:focus-visible .brand-bg-img {
+  transform: scale(1.04);
+}
+.brand-tile:hover .brand-cta,
+.brand-tile:focus-visible .brand-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+.brand-tile:hover .brand-card-name,
+.brand-tile:focus-visible .brand-card-name {
+  color: var(--color-gold);
+}
+
 /* ---------- Animaciones ---------- */
 @keyframes fadeUp {
   from {
