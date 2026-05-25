@@ -30,7 +30,8 @@ from app.db.session import AsyncSessionLocal
 from app.models.producto import Producto
 
 # "Caja [de] <n> unid|und|unidad(es)" -> captura n. No matchea "Box Pressed".
-RE_CAJA = re.compile(r"\bcaja\s+(?:de\s+)?(\d+)\s+un[a-z]*\.?", re.IGNORECASE)
+# Acepta tanto "Caja de 25 UND" como "Caja de 10UND" (sin espacio).
+RE_CAJA = re.compile(r"\bcaja\s+(?:de\s+)?(\d+)\s*un[a-z]*\.?", re.IGNORECASE)
 RE_WS = re.compile(r"\s+")
 
 

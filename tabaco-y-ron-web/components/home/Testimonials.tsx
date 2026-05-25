@@ -12,7 +12,7 @@ export default function Testimonials() {
   }, []);
   const t = TESTIMONIALS[idx];
   return (
-    <section className="bg-coal py-22 md:py-35">
+    <section className="flex min-h-[calc(100svh-84px)] flex-col justify-center bg-coal py-16 lg:min-h-[calc(100svh-104px)] lg:py-20">
       <div className="container-tr mx-auto max-w-[1080px]">
         <div className="eyebrow mb-7 text-center md:mb-10">— V. Cartas de clientes —</div>
         <blockquote key={idx} className="fade-up m-0 p-0">

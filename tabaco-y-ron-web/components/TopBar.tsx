@@ -44,20 +44,6 @@ export default function TopBar() {
         borderBottom: scrolled ? "1px solid var(--color-line)" : "1px solid transparent",
       }}
     >
-      {/* Barra de anuncio */}
-      <div
-        className="border-b border-[rgba(200,169,106,0.08)] bg-coal-deep px-4 py-2 text-center text-[9px] uppercase tracking-[0.14em] text-cream-mute md:px-6 md:py-2.5 md:text-[11px] md:tracking-[0.2em]"
-      >
-        <span className="text-gold">◆</span>
-        <span className="mx-3.5">
-          <span className="md:hidden">Envío discreto · 48h en pedidos +200 €</span>
-          <span className="hidden md:inline">
-            Envío discreto a toda Europa — entrega en 48h en pedidos sobre 200 €
-          </span>
-        </span>
-        <span className="text-gold">◆</span>
-      </div>
-
       <div className="container-tr flex items-center justify-between py-4 md:py-[22px]">
         <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center">
           <Logo size={15} />
@@ -146,7 +132,7 @@ export default function TopBar() {
           style={{
             background: "rgba(10,10,10,0.97)",
             backdropFilter: "blur(20px)",
-            paddingTop: 92,
+            paddingTop: 64,
             animation: "fadeIn 0.25s ease",
           }}
         >

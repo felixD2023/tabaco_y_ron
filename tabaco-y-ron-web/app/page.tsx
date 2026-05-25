@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-screen flex-col overflow-hidden">
+    <section className="relative flex h-[calc(100svh-56px)] max-h-[900px] flex-col overflow-hidden lg:h-[calc(100svh-68px)]">
       <Placeholder
         tag="hero"
         seed="tr-home-hero"
@@ -64,15 +64,15 @@ function Hero() {
         </div>
       </div>
 
-      <div className="container-tr relative z-[4] flex w-full flex-1 flex-col justify-end py-12 md:py-16">
+      <div className="container-tr relative z-[4] flex w-full flex-1 flex-col justify-end pt-6 pb-[110px] md:pt-10 md:pb-[110px] lg:pt-12 lg:pb-[120px]">
         <div className="fade-up max-w-[880px]">
-          <div className="mb-5 flex items-center gap-3.5 md:mb-7">
+          <div className="mb-3 flex items-center gap-3.5 md:mb-5">
             <span className="h-px w-7 bg-gold md:w-12" />
             <span className="eyebrow">Edición Primavera · MMXXVI</span>
           </div>
           <h1
             className="font-normal leading-[0.96]"
-            style={{ fontSize: "clamp(46px, 8vw, 124px)", letterSpacing: "-0.02em" }}
+            style={{ fontSize: "clamp(40px, 6.5vw, 84px)", letterSpacing: "-0.02em" }}
           >
             El arte
             <br />
@@ -80,11 +80,11 @@ function Hero() {
             <br />
             con calma.
           </h1>
-          <p className="mt-6 max-w-[540px] text-[15px] leading-[1.65] text-cream-mute md:mt-9 md:text-lg">
+          <p className="mt-4 max-w-[540px] text-[14px] leading-[1.55] text-cream-mute md:mt-5 md:text-base lg:mt-6">
             Una selección curada de los mejores habanos del mundo, traídos directamente de las casas
             que aún liden la hoja a mano. Sin atajos, sin prisa, sin concesiones.
           </p>
-          <div className="mt-8 flex flex-col gap-3 md:mt-12 md:flex-row md:gap-4">
+          <div className="mt-5 flex flex-col gap-2.5 md:mt-7 md:flex-row md:gap-4 lg:mt-8">
             <Link href="/tienda" className="btn-tr solid justify-center md:justify-start">
               Ver el catálogo <span className="ml-1 text-base">→</span>
             </Link>
@@ -96,10 +96,10 @@ function Hero() {
       </div>
 
       <div
-        className="relative z-[5] border-t border-line"
+        className="absolute inset-x-0 bottom-0 z-[5] border-t border-line"
         style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(10px)" }}
       >
-        <div className="container-tr grid grid-cols-2 gap-x-4 gap-y-3 py-4 md:grid-cols-4 md:gap-0 md:py-6">
+        <div className="container-tr grid grid-cols-2 gap-x-4 gap-y-2 py-3 md:grid-cols-4 md:gap-0 md:py-4 lg:py-5">
           {[
             ["12", "casas representadas"],
             ["200+", "referencias activas"],
@@ -111,7 +111,7 @@ function Hero() {
               className="flex items-baseline gap-2 md:gap-3.5 md:pr-6"
               style={{ borderRight: i < 3 ? "1px solid var(--color-line)" : "none" }}
             >
-              <span className="font-serif text-2xl leading-none text-gold md:text-4xl">{n}</span>
+              <span className="font-serif text-xl leading-none text-gold md:text-3xl">{n}</span>
               <span className="text-[9px] uppercase tracking-[0.18em] text-cream-mute md:text-[11px]">
                 {l}
               </span>
@@ -125,7 +125,7 @@ function Hero() {
 
 function ManifestoSection() {
   return (
-    <section className="relative bg-coal py-16 md:py-22 lg:py-30">
+    <section className="relative flex min-h-[calc(100svh-56px)] flex-col justify-center bg-coal py-16 lg:min-h-[calc(100svh-68px)] lg:py-20">
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
@@ -171,29 +171,31 @@ function ManifestoSection() {
 
 function LookbookTeaser() {
   return (
-    <section className="border-y border-line bg-coal-soft py-16 md:py-22 lg:py-30">
-      <div className="container-tr">
+    <section className="flex min-h-[calc(100svh-56px)] flex-col justify-center border-y border-line bg-coal-soft py-16 lg:min-h-[calc(100svh-68px)] lg:py-20">
+      <div className="px-5 md:px-8 lg:px-14">
         <SectionHead num="IV" eyebrow="Lookbook" title="El gesto, antes que el objeto." />
-        <div className="grid grid-cols-2 gap-2 lg:hidden">
-          <Placeholder label="hands · liando" tag="hands" seed="tr-look-hands" variant="warm" className="col-span-2" style={{ aspectRatio: "3/4" }} />
-          <Placeholder label="humo · macro" tag="smoke" seed="tr-look-smoke" variant="smoke" style={{ aspectRatio: "1/1" }} />
-          <Placeholder label="anillas · detalle" tag="ring" seed="tr-look-ring" style={{ aspectRatio: "1/1" }} />
-          <Placeholder label="humidor · interior" tag="box" seed="tr-look-humidor" variant="warm" style={{ aspectRatio: "1/1" }} />
-          <Placeholder label="ron · cristalería" tag="whiskey" seed="tr-look-ron" variant="crimson" style={{ aspectRatio: "1/1" }} />
-        </div>
-        <div
-          className="hidden gap-4 lg:grid"
-          style={{ gridTemplateColumns: "repeat(12, 1fr)", gridTemplateRows: "300px 300px" }}
-        >
-          <Placeholder label="hands · liando" tag="hands" seed="tr-look-hands" variant="warm" style={{ gridColumn: "span 4", gridRow: "span 2" }} />
-          <Placeholder label="humo · macro" tag="smoke" seed="tr-look-smoke" variant="smoke" style={{ gridColumn: "span 5", gridRow: "span 1" }} />
-          <Placeholder label="anillas · detalle" tag="ring" seed="tr-look-ring" style={{ gridColumn: "span 3", gridRow: "span 1" }} />
-          <Placeholder label="humidor · interior" tag="box" seed="tr-look-humidor" variant="warm" style={{ gridColumn: "span 3", gridRow: "span 1" }} />
-          <Placeholder label="ron · cristalería" tag="whiskey" seed="tr-look-ron" variant="crimson" style={{ gridColumn: "span 5", gridRow: "span 1" }} />
-        </div>
-        <div className="mt-8 flex justify-center md:mt-12">
-          <button className="btn-tr">Ver lookbook completo →</button>
-        </div>
+      </div>
+
+      <div className="grid w-full grid-cols-2 gap-2 lg:hidden">
+        <Placeholder label="hands · liando" tag="hands" seed="tr-look-hands" variant="warm" className="col-span-2" style={{ aspectRatio: "3/4" }} />
+        <Placeholder label="humo · macro" tag="smoke" seed="tr-look-smoke" variant="smoke" style={{ aspectRatio: "1/1" }} />
+        <Placeholder label="anillas · detalle" tag="ring" seed="tr-look-ring" style={{ aspectRatio: "1/1" }} />
+        <Placeholder label="humidor · interior" tag="box" seed="tr-look-humidor" variant="warm" style={{ aspectRatio: "1/1" }} />
+        <Placeholder label="ron · cristalería" tag="whiskey" seed="tr-look-ron" variant="crimson" style={{ aspectRatio: "1/1" }} />
+      </div>
+      <div
+        className="hidden w-full gap-4 lg:grid"
+        style={{ gridTemplateColumns: "repeat(12, 1fr)", gridTemplateRows: "300px 300px" }}
+      >
+        <Placeholder label="hands · liando" tag="hands" seed="tr-look-hands" variant="warm" style={{ gridColumn: "span 4", gridRow: "span 2" }} />
+        <Placeholder label="humo · macro" tag="smoke" seed="tr-look-smoke" variant="smoke" style={{ gridColumn: "span 5", gridRow: "span 1" }} />
+        <Placeholder label="anillas · detalle" tag="ring" seed="tr-look-ring" style={{ gridColumn: "span 3", gridRow: "span 1" }} />
+        <Placeholder label="humidor · interior" tag="box" seed="tr-look-humidor" variant="warm" style={{ gridColumn: "span 3", gridRow: "span 1" }} />
+        <Placeholder label="ron · cristalería" tag="whiskey" seed="tr-look-ron" variant="crimson" style={{ gridColumn: "span 5", gridRow: "span 1" }} />
+      </div>
+
+      <div className="container-tr mt-8 flex justify-center md:mt-12">
+        <button className="btn-tr">Ver lookbook completo →</button>
       </div>
     </section>
   );
