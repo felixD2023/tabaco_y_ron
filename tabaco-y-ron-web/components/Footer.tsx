@@ -1,58 +1,115 @@
 import Link from "next/link";
+
 import { Logo } from "./ui";
 
 const COLS = [
   {
     title: "Catálogo",
-    items: ["Habanos", "Por marca", "Edición limitada", "Reservas privadas"],
-    href: "/tienda",
+    items: [
+      ["Habanos", "/tienda"],
+      ["Por marca", "/tienda"],
+      ["Edición limitada", "/tienda"],
+      ["Reservas privadas", "/nosotros"],
+    ] as const,
   },
   {
     title: "Accesorios",
-    items: ["Humidores", "Cortadores", "Encendedores", "Estuches"],
-    href: "/accesorios",
+    items: [
+      ["Humidores", "/accesorios"],
+      ["Cortadores", "/accesorios"],
+      ["Encendedores", "/accesorios"],
+      ["Estuches", "/accesorios"],
+    ] as const,
   },
   {
-    title: "Casa",
-    items: ["Nuestra historia", "Club privado", "Catas", "Contacto"],
-    href: "/nosotros",
+    title: "La Casa",
+    items: [
+      ["Nuestra historia", "/nosotros"],
+      ["Club privado", "/nosotros"],
+      ["Catas y eventos", "/blog"],
+      ["Contacto", "/nosotros"],
+    ] as const,
   },
+];
+
+const SOCIAL: ReadonlyArray<readonly [string, string]> = [
+  ["IG", "Instagram"],
+  ["FB", "Facebook"],
+  ["YT", "YouTube"],
+  ["WA", "WhatsApp"],
 ];
 
 export default function Footer() {
   return (
-    <footer className="mt-20 border-t border-line bg-coal-deep py-16 pb-6 md:py-24 md:pb-8">
-      <div className="container-tr">
+    <footer
+      className="relative mt-0 overflow-hidden pt-16 pb-6 md:pt-24 md:pb-8"
+      style={{
+        background: "var(--color-graphite)",
+        color: "#D6CFC0",
+        borderTop: "1px solid rgba(196,168,98,0.18)",
+      }}
+    >
+      {/* Watermark decorativo */}
+      <div
+        className="watermark"
+        aria-hidden
+        style={{ right: -40, bottom: -80, color: "rgba(196,168,98,0.05)" }}
+      >
+        T&amp;R
+      </div>
+
+      <div className="container-tr relative">
         <div className="mb-12 grid grid-cols-1 gap-10 md:mb-20 md:gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr]">
+          {/* Columna 1 — Logo + descripción + social */}
           <div>
             <Logo size={17} />
-            <p className="mt-6 max-w-[280px] text-sm leading-[1.7] text-cream-mute">
-              Curaduría de habanos y accesorios desde 2009. Una pequeña casa especializada en lo
-              serio.
+            <p
+              className="mt-6 max-w-[300px] text-sm leading-[1.75]"
+              style={{ color: "rgba(245,241,234,0.65)" }}
+            >
+              Casa fundada en Ciudad de Panamá hace 22 años. Curaduría premium de tabaco y
+              accesorios. {""}
+              <span style={{ color: "var(--color-gold-pure)" }}>
+                Variedad · Honestidad · Garantía.
+              </span>
             </p>
-            <div className="mt-7 flex gap-3">
-              {["IG", "FB", "YT"].map((s) => (
-                <button
-                  key={s}
-                  className="h-9 w-9 border border-line text-[10px] tracking-[0.1em] text-gold"
+            <div className="mt-7 flex gap-2.5">
+              {SOCIAL.map(([abbr, full]) => (
+                <a
+                  key={abbr}
+                  href="#"
+                  title={full}
+                  aria-label={full}
+                  className="footer-social flex h-9 w-9 items-center justify-center text-[10px] font-bold tracking-[0.1em] transition-colors"
+                  style={{
+                    border: "1px solid rgba(196,168,98,0.3)",
+                    color: "var(--color-gold-pure)",
+                  }}
                 >
-                  {s}
-                </button>
+                  {abbr}
+                </a>
               ))}
             </div>
           </div>
 
+          {/* Columnas 2, 3, 4 — Catálogo / Accesorios / La Casa */}
           {COLS.map((col) => (
             <div key={col.title}>
-              <div className="eyebrow mb-[22px]">{col.title}</div>
-              <ul className="flex list-none flex-col gap-3.5 p-0">
-                {col.items.map((it) => (
-                  <li key={it}>
+              <div
+                className="eyebrow mb-[22px]"
+                style={{ color: "var(--color-gold-pure)" }}
+              >
+                {col.title}
+              </div>
+              <ul className="m-0 flex list-none flex-col gap-3.5 p-0">
+                {col.items.map(([label, href]) => (
+                  <li key={label}>
                     <Link
-                      href={col.href}
-                      className="text-sm text-cream-mute transition-colors hover:text-gold"
+                      href={href}
+                      className="footer-link text-sm transition-colors"
+                      style={{ color: "rgba(245,241,234,0.7)" }}
                     >
-                      {it}
+                      {label}
                     </Link>
                   </li>
                 ))}
@@ -60,40 +117,100 @@ export default function Footer() {
             </div>
           ))}
 
+          {/* Columna 5 — Newsletter + contacto */}
           <div>
-            <div className="eyebrow mb-[22px]">El Boletín</div>
-            <p className="mb-[18px] text-sm leading-[1.6] text-cream-mute">
+            <div
+              className="eyebrow mb-[22px]"
+              style={{ color: "var(--color-gold-pure)" }}
+            >
+              El Boletín
+            </div>
+            <p
+              className="mb-[18px] text-sm leading-[1.65]"
+              style={{ color: "rgba(245,241,234,0.65)" }}
+            >
               Una carta al mes. Nuevas llegadas, lecturas, catas privadas.
             </p>
-            <form className="flex border border-line-strong">
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="flex"
+              style={{ border: "1px solid var(--color-gold-pure)" }}
+            >
               <input
                 type="email"
                 placeholder="tu@correo.com"
-                className="min-w-0 flex-1 bg-transparent px-4 py-3.5 font-sans text-[13px] text-cream outline-none"
+                aria-label="Correo para el boletín"
+                className="min-w-0 flex-1 bg-transparent px-4 py-3.5 font-sans text-[13px] outline-none"
+                style={{ color: "#F5F1EA" }}
               />
               <button
                 type="submit"
-                className="bg-gold px-5 text-[11px] font-bold uppercase tracking-[0.2em] text-coal"
+                className="px-5 text-[10.5px] font-bold uppercase tracking-[0.24em] transition-colors hover:bg-gold-soft"
+                style={{
+                  background: "var(--color-gold-pure)",
+                  color: "var(--color-graphite)",
+                }}
               >
                 Unirme
               </button>
             </form>
+            <address
+              className="mt-6 text-[11px] not-italic uppercase leading-[1.9] tracking-[0.2em]"
+              style={{ color: "rgba(245,241,234,0.45)" }}
+            >
+              Casco Antiguo, Ciudad de Panamá
+              <br />
+              casa@tabacoyronpa.com
+              <br />
+              +507 6000 1234
+            </address>
           </div>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-[18px] border-t border-line pt-7 text-xs text-muted md:flex-row md:items-center">
-          <div>© 2026 Tabaco &amp; Ron · Casa fundada en 2009</div>
+        <div
+          className="flex flex-col items-start justify-between gap-[18px] pt-7 text-[11.5px] md:flex-row md:items-center"
+          style={{
+            borderTop: "1px solid rgba(196,168,98,0.18)",
+            color: "rgba(245,241,234,0.55)",
+            letterSpacing: "0.08em",
+          }}
+        >
+          <div>
+            © 2026 Tabaco &amp; Ron <span className="diamond" /> Casa fundada en Ciudad de Panamá, 2003
+          </div>
           <div className="flex flex-wrap gap-[18px] md:gap-7">
-            <a href="#">Aviso legal</a>
-            <a href="#">Privacidad</a>
-            <a href="#">Política de mayoría de edad</a>
+            <a href="#" className="hover:text-gold-pure">
+              Aviso legal
+            </a>
+            <a href="#" className="hover:text-gold-pure">
+              Privacidad
+            </a>
+            <a href="#" className="hover:text-gold-pure">
+              Política de mayoría de edad
+            </a>
           </div>
         </div>
 
-        <div className="mt-12 border border-[rgba(185,28,28,0.4)] bg-[rgba(185,28,28,0.06)] p-5 text-center text-[11px] uppercase tracking-[0.16em] text-cream-mute">
-          ⚠ &nbsp; El tabaco perjudica gravemente la salud — Venta exclusiva a mayores de 18 años
+        <div
+          className="mt-10 px-5 py-4 text-center text-[10.5px] font-medium uppercase tracking-[0.22em]"
+          style={{
+            border: "1px solid rgba(245,241,234,0.18)",
+            color: "rgba(245,241,234,0.55)",
+          }}
+        >
+          El tabaco perjudica gravemente la salud <span className="diamond" /> Venta exclusiva a mayores de 18 años
         </div>
       </div>
+
+      <style>{`
+        .footer-social:hover {
+          background: var(--color-gold-pure);
+          color: var(--color-graphite) !important;
+        }
+        .footer-link:hover {
+          color: var(--color-gold-pure) !important;
+        }
+      `}</style>
     </footer>
   );
 }

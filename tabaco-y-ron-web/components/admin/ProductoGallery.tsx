@@ -104,7 +104,7 @@ export default function ProductoGallery({
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={srcOf(principal)} alt="Imagen principal" className="h-full w-full object-cover" />
-            <span className="absolute left-0 top-0 bg-gold px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-coal">
+            <span className="absolute left-0 top-0 bg-gold px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-ink">
               Principal
             </span>
             {principal.kind === "pending" && (
@@ -151,7 +151,7 @@ export default function ProductoGallery({
                     type="button"
                     aria-label="Mover antes"
                     onClick={() => move(idx, -1)}
-                    className="px-1 text-sm text-cream-mute hover:text-gold"
+                    className="px-1.5 text-base font-bold leading-none text-paper drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-colors hover:text-gold"
                   >
                     ‹
                   </button>
@@ -159,7 +159,7 @@ export default function ProductoGallery({
                     type="button"
                     aria-label="Eliminar"
                     onClick={() => removeAt(idx)}
-                    className="px-1 text-sm text-cream-mute hover:text-crimson"
+                    className="px-1.5 text-base font-bold leading-none text-paper drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-colors hover:text-crimson"
                   >
                     ×
                   </button>
@@ -167,7 +167,7 @@ export default function ProductoGallery({
                     type="button"
                     aria-label="Mover después"
                     onClick={() => move(idx, 1)}
-                    className="px-1 text-sm text-cream-mute hover:text-gold"
+                    className="px-1.5 text-base font-bold leading-none text-paper drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-colors hover:text-gold"
                   >
                     ›
                   </button>
@@ -175,7 +175,7 @@ export default function ProductoGallery({
                 <button
                   type="button"
                   onClick={() => makePrincipal(idx)}
-                  className="bg-gold/90 py-1 text-[9px] font-bold uppercase tracking-[0.1em] text-coal hover:bg-gold"
+                  className="bg-gold/90 py-1 text-[9px] font-bold uppercase tracking-[0.1em] text-ink hover:bg-gold"
                 >
                   ★ Principal
                 </button>

@@ -30,7 +30,7 @@ function PostCard({ post, large = false }: { post: Post; large?: boolean }) {
           variant={VARIANTS[post.category]}
           style={{ aspectRatio: "16/11" }}
         >
-          <div className="absolute left-[18px] top-[18px] z-[3] bg-gold px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-coal">
+          <div className="absolute left-[18px] top-[18px] z-[3] bg-gold px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-ink">
             Editorial del mes
           </div>
         </Placeholder>
@@ -171,7 +171,7 @@ export default function BlogClient() {
             />
             <button
               type="submit"
-              className="bg-gold px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-coal md:px-7 md:py-0"
+              className="bg-gold px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-ink md:px-7 md:py-0"
             >
               Unirme
             </button>

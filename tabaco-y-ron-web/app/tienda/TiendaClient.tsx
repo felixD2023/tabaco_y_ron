@@ -290,7 +290,7 @@ function ProductCard({
         ) : (
           <div
             aria-hidden
-            className="absolute inset-0 z-[2] flex flex-col items-center justify-center gap-2 text-coal/40"
+            className="absolute inset-0 z-[2] flex flex-col items-center justify-center gap-2 text-ink/40"
           >
             <svg
               width="40"
@@ -399,13 +399,30 @@ function ProductDetailDrawer({
   }, [onClose]);
 
   // Galería: 1 slot principal (la caja, o la única imagen si no hay caja) + 3 thumbs.
-  // El primer thumb es la imagen tipo 'tabaco_suelto' si existe; los demás son
-  // placeholders (rellenan visualmente, se completarán más adelante).
+  // Se deduplica contra la principal y se prioriza por tipo (tabaco_suelto
+  // primero, luego detalle) para que la pieza individual nunca quede recortada.
   const slots: GallerySlot[] = useMemo(() => {
     const main: GallerySlot = { url: p.imagen ?? null, tipo: "caja" };
+    const TIPO_RANK: Record<string, number> = {
+      tabaco_suelto: 0,
+      detalle: 1,
+      caja: 2,
+    };
+    const seen = new Set<string>();
+    if (p.imagen) seen.add(p.imagen);
     const galleryItems = (p.imagenes ?? [])
       .slice()
-      .sort((a, b) => a.orden - b.orden)
+      .filter((img) => {
+        if (seen.has(img.url)) return false;
+        seen.add(img.url);
+        return true;
+      })
+      .sort((a, b) => {
+        const ra = TIPO_RANK[a.tipo] ?? 3;
+        const rb = TIPO_RANK[b.tipo] ?? 3;
+        if (ra !== rb) return ra - rb;
+        return a.orden - b.orden;
+      })
       .slice(0, 3)
       .map<GallerySlot>((img) => ({ url: img.url, tipo: img.tipo }));
     const padded = [
@@ -501,7 +518,7 @@ function ProductDetailDrawer({
                   key={active.url}
                 />
               ) : (
-                <div className="relative z-[2] flex flex-col items-center gap-3 text-coal/45">
+                <div className="relative z-[2] flex flex-col items-center gap-3 text-ink/45">
                   <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
                     <rect x="3" y="5" width="18" height="14" rx="1" />
                     <circle cx="8.5" cy="10.5" r="1.5" />
@@ -559,7 +576,7 @@ function ProductDetailDrawer({
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.4"
-                        className="relative z-[2] text-coal/40"
+                        className="relative z-[2] text-ink/40"
                       >
                         <rect x="3" y="5" width="18" height="14" rx="1" />
                         <circle cx="8.5" cy="10.5" r="1.5" />
@@ -673,7 +690,7 @@ function CheckRow({
           className="inline-flex h-3.5 w-3.5 items-center justify-center border border-current"
           style={{ background: checked ? "var(--color-gold)" : "transparent" }}
         >
-          {checked && <span className="text-[10px] leading-none text-coal">✓</span>}
+          {checked && <span className="text-[10px] leading-none text-ink">✓</span>}
         </span>
         <span className="text-sm">{label}</span>
       </span>

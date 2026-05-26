@@ -1,38 +1,60 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Tabaco & Ron — sistema de diseño
-   Paleta: negro profundo · dorado champagne · rojo del logo · crema
+   Tabaco & Ron — Sistema de diseño (Manual oficial 2025)
+   Tema CLARO Mármol & Oro · paleta cream + grafito + oro envejecido
    Tipografía: Georgia (display) + Lato (UI/cuerpo)
+   Casa fundada en Ciudad de Panamá, 2003 · 22 años · 600+ refs
+   ------------------------------------------------------------
+   Los nombres legacy (coal/cream/muted/line) se conservan y
+   se reasignan a los equivalentes claros para que el código
+   existente siga renderizando mientras se migra.
    ============================================================ */
 @theme {
-  /* Fondos */
-  --color-coal: #0a0a0a;
-  --color-coal-soft: #121212;
-  --color-coal-raised: #1a1a1a;
-  --color-coal-deep: #060606;
+  /* ---- Fondos (tema claro) ---- */
+  --color-paper:        #FAF6EE;   /* Papel para cards */
+  --color-paper-2:      #EFE9DC;   /* Capa secundaria, alterna secciones */
+  --color-paper-base:   #F5F1EA;   /* Crema mármol base */
+  --color-graphite:     #1F1D1B;   /* Grafito profundo (footer, secciones inversas) */
 
-  /* Acentos */
-  --color-gold: #c8a96a;
-  --color-gold-bright: #e3c889;
-  --color-crimson: #b91c1c;
-  --color-crimson-deep: #8a0f0f;
+  /* ---- Texto ---- */
+  --color-ink:          #1F1D1B;   /* Grafito principal */
+  --color-ink-2:        #4A4A52;   /* Acero — secundario */
+  --color-ink-mute:     #7A746A;   /* Plata cálida — metadatos */
+  --color-ink-soft:     #A89F90;   /* Plata clara */
 
-  /* Texto */
-  --color-cream: #f5f1e8;
-  --color-cream-mute: #b8b1a0;
-  --color-muted: #6f6857;
+  /* ---- Acentos ---- */
+  --color-gold:         #B08545;   /* Oro envejecido (sobre cream) */
+  --color-gold-pure:    #C4A862;   /* Oro Añejo manual (sobre grafito) */
+  --color-gold-soft:    #D9C28C;
+  --color-gold-bright:  #C4A862;   /* alias legacy */
 
-  /* Hairlines doradas */
-  --color-line: rgba(200, 169, 106, 0.18);
-  --color-line-strong: rgba(200, 169, 106, 0.45);
+  /* ---- Rojo (solo logo + badge "Pieza del mes") ---- */
+  --color-red:          #B91C1C;
+  --color-red-deep:     #8A0F0F;
+  --color-crimson:      #B91C1C;   /* alias legacy */
+  --color-crimson-deep: #8A0F0F;   /* alias legacy */
 
-  /* Tipografía */
-  --font-serif: Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-lato), "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: "Courier New", monospace;
+  /* ---- Líneas ---- */
+  --color-line:         rgba(31,29,27,0.12);
+  --color-line-strong:  rgba(31,29,27,0.32);
+  --color-line-gold:    rgba(176,133,69,0.30);
 
-  /* Breakpoints alineados con el prototipo (móvil <720 · tablet 720–1024 · desktop ≥1024) */
+  /* ---- Aliases legacy (coal/cream) → tema claro ---- */
+  --color-coal:         #F5F1EA;   /* antes #0a0a0a */
+  --color-coal-soft:    #EFE9DC;   /* antes #121212 */
+  --color-coal-raised:  #FAF6EE;   /* antes #1a1a1a */
+  --color-coal-deep:    #1F1D1B;   /* antes #060606 — ahora grafito */
+  --color-cream:        #1F1D1B;   /* antes #f5f1e8 — ahora ink */
+  --color-cream-mute:   #7A746A;   /* antes #b8b1a0 — ahora ink-mute */
+  --color-muted:        #A89F90;   /* antes #6f6857 — ahora ink-soft */
+
+  /* ---- Tipografía ---- */
+  --font-serif: Georgia, "Times New Roman", "Bodoni Moda", serif;
+  --font-sans:  var(--font-lato), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono:  "JetBrains Mono", "Courier New", monospace;
+
+  /* ---- Breakpoints (móvil <720 · tablet 720–1024 · desktop ≥1024) ---- */
   --breakpoint-sm: 560px;
   --breakpoint-md: 720px;
   --breakpoint-lg: 1024px;
@@ -47,17 +69,25 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--color-coal);
-  color: var(--color-cream);
+  background: var(--color-paper-base);
+  color: var(--color-ink);
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
-  /* Controles de formulario nativos (popups de select, scrollbars) en oscuro. */
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
 }
 
 h1,
@@ -65,19 +95,19 @@ h2,
 h3,
 h4 {
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-weight: 500;
   margin: 0;
   letter-spacing: -0.01em;
 }
 
 p {
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 ::selection {
   background: var(--color-gold);
-  color: var(--color-coal);
+  color: var(--color-paper-base);
 }
 
 ::-webkit-scrollbar {
@@ -85,30 +115,26 @@ p {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-coal);
+  background: var(--color-paper-base);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2418;
+  background: rgba(31, 29, 27, 0.18);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-muted);
+  background: var(--color-gold);
 }
 
 :focus-visible {
   outline: 1px solid var(--color-gold);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
-/* ---------- Selects (tema oscuro, flecha dorada) ----------
-   Reglas sin @layer → ganan a las utilidades de Tailwind, por eso
-   podemos reservar el hueco de la flecha sin tocar el padding vertical.
-   El popup de <option> solo se puede tematizar desde CSS global. */
+/* ---------- Selects (tema claro, flecha grafito) ---------- */
 select {
   appearance: none;
   -webkit-appearance: none;
-  /* Hace que Chrome/Edge pinten el popup nativo de <option> en oscuro. */
-  color-scheme: dark;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23c8a96a'%20stroke-width='2.5'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='m6%209%206%206%206-6'/%3E%3C/svg%3E");
+  color-scheme: light;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%231F1D1B'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='m6%209%206%206%206-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.7rem center;
   background-size: 0.7rem auto;
@@ -125,19 +151,19 @@ select:focus-visible {
   border-color: var(--color-gold);
 }
 select option {
-  background-color: var(--color-coal-soft);
-  color: var(--color-cream);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   padding: 8px 10px;
 }
 select option:checked {
   background-color: var(--color-gold);
-  color: var(--color-coal);
+  color: var(--color-paper);
   font-weight: 500;
 }
 
-/* ---------- Utilidades de marca ---------- */
+/* ---------- Container ---------- */
 @utility container-tr {
-  max-width: 1440px;
+  max-width: 1480px;
   margin-inline: auto;
   padding-inline: 20px;
 }
@@ -152,77 +178,189 @@ select option:checked {
   }
 }
 
+/* ---------- Eyebrow ---------- */
 @utility eyebrow {
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 10.5px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--color-gold);
 }
+.eyebrow.ink  { color: var(--color-ink); }
+.eyebrow.mute { color: var(--color-ink-mute); }
+.eyebrow.gold { color: var(--color-gold); }
+.eyebrow.cream { color: rgba(245, 241, 234, 0.7); }
 
-/* Botones */
+/* ---------- Hairlines y separadores ---------- */
+.hairline {
+  height: 1px;
+  background: var(--color-line);
+  width: 100%;
+}
+.hairline-gold {
+  height: 1px;
+  background: var(--color-gold);
+  width: 40px;
+}
+.divider-diamond {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.divider-diamond::before,
+.divider-diamond::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-line-gold);
+}
+.diamond {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--color-gold);
+  transform: rotate(45deg);
+  vertical-align: middle;
+  margin: 0 12px;
+}
+
+/* ---------- Watermark T&R ---------- */
+.watermark {
+  position: absolute;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: rgba(176, 133, 69, 0.06);
+  font-size: clamp(180px, 28vw, 380px);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  letter-spacing: -0.04em;
+}
+
+/* ---------- Botones ---------- */
 @utility btn-tr {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 16px 28px;
+  padding: 15px 26px;
   font-family: var(--font-sans);
   font-weight: 700;
   font-size: 11px;
-  letter-spacing: 0.26em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  border: 1px solid var(--color-gold);
-  color: var(--color-gold);
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
   background: transparent;
   cursor: pointer;
   transition: all 0.25s ease;
 }
 .btn-tr:hover {
-  background: var(--color-gold);
-  color: var(--color-coal);
+  background: var(--color-ink);
+  color: var(--color-paper);
 }
 .btn-tr.solid {
-  background: var(--color-gold);
-  color: var(--color-coal);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
 }
 .btn-tr.solid:hover {
-  background: var(--color-gold-bright);
-  border-color: var(--color-gold-bright);
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-paper);
+}
+.btn-tr.gold {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+.btn-tr.gold:hover {
+  background: var(--color-gold);
+  color: var(--color-paper);
+}
+.btn-tr.gold.solid {
+  background: var(--color-gold);
+  color: var(--color-paper);
+  border-color: var(--color-gold);
+}
+.btn-tr.gold.solid:hover {
+  background: #9c7237;
+  border-color: #9c7237;
 }
 .btn-tr.ghost {
-  border-color: rgba(245, 241, 232, 0.25);
-  color: var(--color-cream);
+  border-color: var(--color-line-strong);
+  color: var(--color-ink-2);
 }
 .btn-tr.ghost:hover {
-  background: var(--color-cream);
-  color: var(--color-coal);
-  border-color: var(--color-cream);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+}
+/* Variantes para hero "inverso" (botón sobre fondo oscuro/imagen). */
+.btn-tr.on-image {
+  background: var(--color-gold-pure);
+  color: var(--color-graphite);
+  border-color: var(--color-gold-pure);
+}
+.btn-tr.on-image:hover {
+  background: #f5f1ea;
+  border-color: #f5f1ea;
+  color: var(--color-graphite);
+}
+.btn-tr.on-image-ghost {
+  background: transparent;
+  color: #f5f1ea;
+  border-color: rgba(245, 241, 234, 0.5);
+}
+.btn-tr.on-image-ghost:hover {
+  background: #f5f1ea;
+  color: var(--color-graphite);
+  border-color: #f5f1ea;
 }
 
-/* Logo pill */
+/* ---------- Logo pill (siempre rojo) ---------- */
 @utility logo-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-crimson);
-  color: var(--color-cream);
+  background: var(--color-red);
+  color: #f5f1ea;
   font-family: var(--font-serif);
   font-weight: 700;
   font-style: italic;
   border-radius: 999px;
-  letter-spacing: 0.01em;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.005em;
+  box-shadow:
+    0 2px 0 rgba(138, 15, 15, 0.5),
+    0 8px 18px rgba(185, 28, 28, 0.12);
   line-height: 1;
   white-space: nowrap;
 }
 
-/* ---------- Sistema de placeholders / fotografía ---------- */
+/* ---------- Card paper (para tarjetas sobre fondo cream) ---------- */
+@utility card-paper {
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+}
+
+/* ---------- Sección inversa (grafito) ---------- */
+.inverse {
+  background: var(--color-graphite);
+  color: var(--color-paper);
+}
+.inverse h1,
+.inverse h2,
+.inverse h3,
+.inverse h4 {
+  color: var(--color-paper);
+}
+
+/* ---------- Sistema de placeholders / fotografía (gradiente ACERO del manual) ---------- */
 .ph {
   position: relative;
   overflow: hidden;
-  background: #161310;
-  color: var(--color-gold);
+  background: #4a4a52;
+  color: var(--color-gold-pure);
   isolation: isolate;
 }
 .ph::before {
@@ -231,9 +369,8 @@ select option:checked {
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(ellipse at 30% 40%, rgba(200, 169, 106, 0.18), transparent 55%),
-    radial-gradient(ellipse at 75% 75%, rgba(185, 28, 28, 0.22), transparent 50%),
-    linear-gradient(180deg, #1a1611 0%, #0c0a07 100%);
+    radial-gradient(ellipse at 30% 30%, rgba(196, 168, 98, 0.18) 0%, rgba(196, 168, 98, 0) 55%),
+    linear-gradient(160deg, #5c5c66 0%, #4a4a52 45%, #2a2a2e 100%);
 }
 .ph::after {
   content: "";
@@ -242,27 +379,29 @@ select option:checked {
   z-index: 1;
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(200, 169, 106, 0.04) 0 1px,
-    transparent 1px 14px
+    rgba(245, 241, 234, 0.04) 0 1px,
+    transparent 1px 16px
   );
 }
 .ph.warm::before {
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(227, 200, 137, 0.22), transparent 55%),
-    radial-gradient(ellipse at 60% 90%, rgba(139, 90, 43, 0.35), transparent 55%),
-    linear-gradient(180deg, #1c140c 0%, #0a0805 100%);
+    radial-gradient(ellipse at 50% 30%, rgba(196, 168, 98, 0.32) 0%, rgba(196, 168, 98, 0) 55%),
+    linear-gradient(160deg, #6e5f44 0%, #4a4136 50%, #2a2520 100%);
 }
 .ph.smoke::before {
   background:
-    radial-gradient(ellipse at 20% 80%, rgba(245, 241, 232, 0.08), transparent 50%),
-    radial-gradient(ellipse at 75% 30%, rgba(200, 169, 106, 0.1), transparent 55%),
-    linear-gradient(180deg, #0e0c0a 0%, #050403 100%);
+    radial-gradient(ellipse at 30% 50%, rgba(200, 200, 208, 0.18) 0%, transparent 60%),
+    linear-gradient(160deg, #5c5c66 0%, #3a3a40 100%);
 }
 .ph.crimson::before {
   background:
-    radial-gradient(ellipse at 35% 55%, rgba(185, 28, 28, 0.3), transparent 55%),
-    radial-gradient(ellipse at 80% 20%, rgba(200, 169, 106, 0.12), transparent 55%),
-    linear-gradient(180deg, #1a0d0d 0%, #0a0505 100%);
+    radial-gradient(ellipse at 35% 55%, rgba(185, 28, 28, 0.22) 0%, transparent 55%),
+    linear-gradient(160deg, #4a2e2e 0%, #2a1818 100%);
+}
+.ph.dark::before {
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(196, 168, 98, 0.28), transparent 55%),
+    linear-gradient(180deg, #2a2723 0%, #15130f 100%);
 }
 .ph-img {
   position: absolute;
@@ -271,7 +410,8 @@ select option:checked {
   height: 100%;
   object-fit: cover;
   z-index: 1;
-  filter: sepia(0.25) brightness(0.78) contrast(1.08) saturate(0.95);
+  /* Tratamiento noir cálido sobre acero */
+  filter: sepia(0.25) brightness(0.85) contrast(1.08) saturate(0.92);
 }
 .ph-overlay {
   position: absolute;
@@ -279,9 +419,8 @@ select option:checked {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 30% 30%, rgba(200, 169, 106, 0.12), transparent 60%),
-    radial-gradient(ellipse at center, transparent 35%, rgba(10, 10, 10, 0.45) 100%),
-    linear-gradient(180deg, rgba(10, 10, 10, 0.1) 0%, rgba(10, 10, 10, 0.3) 100%);
+    radial-gradient(ellipse at 30% 30%, rgba(196, 168, 98, 0.14), transparent 60%),
+    linear-gradient(180deg, rgba(31, 29, 27, 0.10) 0%, rgba(31, 29, 27, 0.45) 100%);
 }
 .ph-label {
   position: absolute;
@@ -290,23 +429,37 @@ select option:checked {
   z-index: 5;
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.14em;
-  color: rgba(245, 241, 232, 0.55);
+  letter-spacing: 0.18em;
+  color: rgba(245, 241, 234, 0.7);
   text-transform: uppercase;
-  padding: 4px 8px;
-  border: 1px solid rgba(245, 241, 232, 0.18);
-  background: rgba(0, 0, 0, 0.4);
+  padding: 5px 10px;
+  border: 1px solid rgba(245, 241, 234, 0.22);
+  background: rgba(31, 29, 27, 0.55);
   backdrop-filter: blur(2px);
 }
+.ph-glyph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  color: rgba(196, 168, 98, 0.34);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 120px;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+}
 
-/* Modo producto — imagen real de catálogo sobre fondo crema */
+/* ---------- Modo producto — fondo cream marfil, pieza centrada ---------- */
 .ph.ph-product {
-  background: linear-gradient(180deg, #efe6d6 0%, #e2d6bf 100%);
+  background: linear-gradient(180deg, #f8f2e2 0%, #ece2c8 100%);
 }
 .ph.ph-product::before {
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.6), transparent 60%),
-    radial-gradient(ellipse at 50% 110%, rgba(80, 55, 30, 0.15), transparent 60%);
+    radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.5), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(80, 55, 30, 0.10), transparent 60%);
 }
 .ph.ph-product::after {
   display: none;
@@ -320,13 +473,12 @@ select option:checked {
   object-position: center;
   z-index: 2;
   padding: 8%;
-  filter: drop-shadow(0 18px 28px rgba(40, 20, 10, 0.28));
+  filter: drop-shadow(0 18px 28px rgba(40, 20, 10, 0.22));
 }
 
-/* Fondo crema de los destacados, reutilizado en las cards de la tienda
-   (gradiente + brillo radial). La imagen va en object-contain y sin padding. */
+/* Fondo cream para cards de producto (reutilizado en tienda) */
 .card-product-bg {
-  background: linear-gradient(180deg, #efe6d6 0%, #e2d6bf 100%);
+  background: linear-gradient(180deg, #f8f2e2 0%, #ece2c8 100%);
 }
 .card-product-bg::before {
   content: "";
@@ -335,11 +487,11 @@ select option:checked {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.6), transparent 60%),
-    radial-gradient(ellipse at 50% 110%, rgba(80, 55, 30, 0.15), transparent 60%);
+    radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.5), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(80, 55, 30, 0.10), transparent 60%);
 }
 
-/* ---------- BrandsStrip — hover de las tarjetas de marca ---------- */
+/* ---------- BrandsStrip — hover de las tarjetas de marca (tema claro) ---------- */
 .brand-tile .brand-cta {
   opacity: 0;
   transform: translateY(8px);
@@ -349,7 +501,7 @@ select option:checked {
 .brand-tile:focus-visible .brand-card {
   transform: translateY(-6px);
   box-shadow:
-    0 24px 50px rgba(0, 0, 0, 0.65),
+    0 24px 50px rgba(31, 29, 27, 0.18),
     0 0 0 1px var(--color-gold);
 }
 .brand-tile:hover .brand-bg-img,
@@ -425,4 +577,167 @@ select option:checked {
 }
 .anim-slide-up {
   animation: slideUpSheet 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* ---------- Reveal on scroll (IntersectionObserver) ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition:
+    opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+.reveal-up    { transform: translateY(48px); }
+.reveal-down  { transform: translateY(-32px); }
+.reveal-left  { transform: translateX(-48px); }
+.reveal-right { transform: translateX(48px); }
+.reveal-zoom  { transform: scale(0.94); }
+.reveal.is-visible.reveal-up,
+.reveal.is-visible.reveal-down,
+.reveal.is-visible.reveal-left,
+.reveal.is-visible.reveal-right,
+.reveal.is-visible.reveal-zoom { transform: none; }
+.reveal-d1 { transition-delay: 0.08s; }
+.reveal-d2 { transition-delay: 0.16s; }
+.reveal-d3 { transition-delay: 0.24s; }
+.reveal-d4 { transition-delay: 0.32s; }
+.reveal-d5 { transition-delay: 0.40s; }
+
+/* Fade-in solo opacidad — para elementos cuyos hijos tienen backdrop-filter
+   (un transform en un ancestro anula el blur). */
+@keyframes fadeOnlyIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.fade-opacity {
+  opacity: 0;
+  animation: fadeOnlyIn 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Letter-by-letter reveal con desenfoque (hero headline) */
+@keyframes letterIn {
+  from { opacity: 0; transform: translateY(40px); filter: blur(8px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+.letters > span {
+  display: inline-block;
+  opacity: 0;
+  animation: letterIn 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Float / drift loops para decoración ambiente */
+@keyframes drift-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+@keyframes drift-x {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(10px); }
+}
+.float-y { animation: drift-y 9s ease-in-out infinite; }
+.float-x { animation: drift-x 11s ease-in-out infinite; }
+
+/* Indicador de scroll del hero (barra dorada que cae) */
+@keyframes scrollPulse {
+  0%   { transform: translateY(-14px); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: translateY(56px); opacity: 0; }
+}
+
+/* Marquee infinito (cinta de marcas) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  gap: 64px;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* Blobs decorativos — círculos blur enorme */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+.blob.gold  { background: radial-gradient(circle, rgba(196, 168, 98, 0.55) 0%, rgba(196, 168, 98, 0) 70%); }
+.blob.warm  { background: radial-gradient(circle, rgba(217, 194, 140, 0.40) 0%, rgba(217, 194, 140, 0) 70%); }
+.blob.smoke { background: radial-gradient(circle, rgba(31, 29, 27, 0.18) 0%, rgba(31, 29, 27, 0) 70%); }
+
+/* Foto difuminada ambiente */
+.photo-blur {
+  position: absolute;
+  overflow: hidden;
+  filter: blur(2px) saturate(1.05);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+.photo-blur::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 241, 234, 0.4),
+    rgba(245, 241, 234, 0.8)
+  );
+}
+.photo-blur img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Accesibilidad — respeta prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.reveal-up,
+  .reveal.reveal-down,
+  .reveal.reveal-left,
+  .reveal.reveal-right,
+  .reveal.reveal-zoom {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .letters > span,
+  .fade-up,
+  .fade-opacity,
+  .float-y,
+  .float-x,
+  .marquee-track {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ---------- Efecto "ventana" (Testimonials) ---------- */
+.bg-window {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* iOS / móviles renderizan fixed mal — caemos a scroll */
+@media (max-width: 720px) {
+  .bg-window { background-attachment: scroll; }
+}
+
+/* ---------- Padding fijo de TopBar (compensa fixed) ---------- */
+:root {
+  --topbar-h: 96px;
+}
+@media (max-width: 1024px) {
+  :root { --topbar-h: 86px; }
+}
+@media (max-width: 720px) {
+  :root { --topbar-h: 78px; }
 }

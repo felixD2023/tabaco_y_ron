@@ -9,12 +9,14 @@ import TopBar from "./TopBar";
 
 /**
  * Envuelve el contenido del sitio con el chrome público (TopBar/Footer/modal de
- * producto). En las rutas del panel de administración (`/tr-admin`) ese chrome
- * se omite: el panel aporta su propio shell a pantalla completa.
+ * producto). El TopBar es `fixed` y flota transparente sobre el hero del home;
+ * en cualquier otra ruta el main se desplaza con `padding-top` para no quedar
+ * tapado. En `/tr-admin` el chrome público se omite por completo.
  */
 export default function PublicChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/tr-admin") ?? false;
+  const isHome = pathname === "/";
 
   if (isAdmin) {
     return <>{children}</>;
@@ -23,7 +25,7 @@ export default function PublicChrome({ children }: { children: ReactNode }) {
   return (
     <>
       <TopBar />
-      <main>{children}</main>
+      <main style={{ paddingTop: isHome ? 0 : "var(--topbar-h)" }}>{children}</main>
       <Footer />
       <ProductModal />
     </>

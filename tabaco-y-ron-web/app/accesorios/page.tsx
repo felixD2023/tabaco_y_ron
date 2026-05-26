@@ -8,7 +8,7 @@ import AccesoriosClient from "./AccesoriosClient";
 export const metadata: Metadata = {
   title: "Accesorios para puros: humidores, cortadores y encendedores",
   description:
-    "Humidores de cedro, cortadores de doble hoja, encendedores triple llama y ceniceros artesanales. Piezas seleccionadas en España, Italia y Cuba para acompañar el ritual del habano.",
+    "Humidores de cedro, cortadores de doble hoja, encendedores triple llama y ceniceros artesanales. Piezas seleccionadas en España, Italia, Cuba y Panamá para acompañar el ritual del habano.",
   alternates: { canonical: "/accesorios" },
   openGraph: {
     type: "website",
@@ -35,7 +35,7 @@ const itemListJsonLd = {
       description: a.blurb,
       offers: {
         "@type": "Offer",
-        priceCurrency: "EUR",
+        priceCurrency: "USD",
         price: a.price,
         availability: "https://schema.org/InStock",
         url: `${SITE_URL}/accesorios`,

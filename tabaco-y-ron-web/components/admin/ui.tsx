@@ -17,8 +17,8 @@ import {
 type Variant = "solid" | "outline" | "ghost" | "danger";
 
 const VARIANT_CLASS: Record<Variant, string> = {
-  solid: "bg-gold text-coal border border-gold hover:bg-gold-bright hover:border-gold-bright",
-  outline: "bg-transparent text-gold border border-gold hover:bg-gold hover:text-coal",
+  solid: "bg-gold text-ink border border-gold hover:bg-gold-bright hover:border-gold-bright",
+  outline: "bg-transparent text-gold border border-gold hover:bg-gold hover:text-ink",
   ghost:
     "bg-transparent text-cream-mute border border-line hover:border-line-strong hover:text-cream",
   danger:
