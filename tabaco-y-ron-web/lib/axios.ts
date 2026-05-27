@@ -1,9 +1,12 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 
-export const API_URL_BASE =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "http://localhost:8000";
+// En cliente: `/api/v1` (mismo origen, monolito Next).
+// En SSR (Node): URL absoluta del propio servidor Next.
+const SERVER_BASE = (process.env.INTERNAL_API_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
 export const API_VERSION_PREFIX = "/api/v1";
+
+export const API_URL_BASE = typeof window === "undefined" ? SERVER_BASE : "";
 
 export const AUTH_TOKEN_KEY = "tyr_auth_token";
 

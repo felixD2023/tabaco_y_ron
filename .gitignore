@@ -71,3 +71,10 @@ coverage/
 .design-reference/
 **/.design-reference/
 /index.html
+
+# Backups locales de rembg (originales pre-procesamiento; útiles solo en local)
+**/_originales_backup/
+
+# Uploads de usuario (servidos en runtime; no son fuente, no van al repo)
+tabaco-y-ron-web/public/static/uploads/*
+!tabaco-y-ron-web/public/static/uploads/.gitkeep

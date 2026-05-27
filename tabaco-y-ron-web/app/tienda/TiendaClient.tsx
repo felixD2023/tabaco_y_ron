@@ -413,6 +413,7 @@ function ProductDetailDrawer({
     const galleryItems = (p.imagenes ?? [])
       .slice()
       .filter((img) => {
+        if (!img.url) return false;
         if (seen.has(img.url)) return false;
         seen.add(img.url);
         return true;
